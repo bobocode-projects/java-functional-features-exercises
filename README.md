@@ -9,5 +9,6 @@ Working on real problems, you're focused on finding a solution. Learning new thi
 It is important to have a different type of activities, which purpose is improving your skill 
 
 ***An exercise** is a predefined task that you continuously implement to improve a certain skill* :muscle:
+##
 * [Math fucntions](https://github.com/bobocode-projects/java-8-exercises/tree/master/math-functions)
 
