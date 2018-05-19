@@ -1,6 +1,7 @@
 package com.bobocode.data;
 
 import com.bobocode.model.Account;
+import com.bobocode.model.Sex;
 import io.codearte.jfairy.Fairy;
 import io.codearte.jfairy.producer.person.Person;
 
@@ -29,6 +30,7 @@ public interface Accounts {
                 person.getDateOfBirth().getYear(),
                 person.getDateOfBirth().getMonthOfYear(),
                 person.getDateOfBirth().getDayOfMonth()));
+        fakeAccount.setSex(Sex.valueOf(person.getSex().name()));
         fakeAccount.setBalance(BigDecimal.valueOf(random.nextInt(200_000)));
         fakeAccount.setCreationDate(LocalDateTime.now());
 

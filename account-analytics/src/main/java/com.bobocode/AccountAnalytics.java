@@ -7,6 +7,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Implement methods using Stream API
+ */
 public class AccountAnalytics {
     private Collection<Account> accounts;
 
@@ -14,7 +17,7 @@ public class AccountAnalytics {
         return new AccountAnalytics(accounts);
     }
 
-    public AccountAnalytics(Collection<Account> accounts) {
+    private AccountAnalytics(Collection<Account> accounts) {
         this.accounts = accounts;
     }
 
@@ -26,8 +29,13 @@ public class AccountAnalytics {
         throw new UnsupportedOperationException("It's your job to make it work!"); // todo
     }
 
+    public Map<Boolean, List<Account>> partitionMaleAccounts() {
+        throw new UnsupportedOperationException("It's your job to make it work!"); // todo
+    }
+
     public Map<String, List<Account>> groupAccountsByEmailDomain() {
         throw new UnsupportedOperationException("It's your job to make it work!"); // todo
     }
+
 
 }

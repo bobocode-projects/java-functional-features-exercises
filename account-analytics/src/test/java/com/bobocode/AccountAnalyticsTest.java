@@ -2,6 +2,7 @@ package com.bobocode;
 
 import com.bobocode.data.Accounts;
 import com.bobocode.model.Account;
+import com.bobocode.model.Sex;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,6 +44,34 @@ public class AccountAnalyticsTest {
         }
 
         return richestPerson;
+    }
+
+    @Test
+    public void testSeparateMaleAccounts() {
+        Map<Boolean, List<Account>> maleToAccountsMap = analytics.partitionMaleAccounts();
+
+        assertEquals(partitionMaleAccounts(), maleToAccountsMap);
+    }
+
+    private Map<Boolean, List<Account>> partitionMaleAccounts() {
+        Map<Boolean, List<Account>> maleToAccountsMap = initializePartitionMap();
+
+        for (Account account : accounts) {
+            if (account.getSex().equals(Sex.MALE)) {
+                maleToAccountsMap.get(true).add(account);
+            } else {
+                maleToAccountsMap.get(false).add(account);
+            }
+        }
+
+        return maleToAccountsMap;
+    }
+
+    private Map<Boolean, List<Account>> initializePartitionMap() {
+        Map<Boolean, List<Account>> partitionMap = new HashMap<>();
+        partitionMap.put(true, new ArrayList<>());
+        partitionMap.put(false, new ArrayList<>());
+        return partitionMap;
     }
 
     @Test
