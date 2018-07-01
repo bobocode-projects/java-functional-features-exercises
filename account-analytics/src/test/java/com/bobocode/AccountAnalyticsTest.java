@@ -16,6 +16,10 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
+/**
+ * The helper method of this test class do not use Stream API intentionally. You should try to find a stream-based
+ * solutions for {@link AccountAnalytics} by yourself.
+ */
 @RunWith(JUnit4.class)
 public class AccountAnalyticsTest {
 
