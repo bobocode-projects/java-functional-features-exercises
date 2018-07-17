@@ -9,6 +9,15 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>math-functions</artifactId>
+    <artifactId>account-data</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.codearte.jfairy</groupId>
+            <artifactId>jfairy</artifactId>
+            <version>0.5.7</version>
+        </dependency>
+    </dependencies>
+
 
 </project>

@@ -79,7 +79,7 @@ public class FunctionsTest {
     }
 
     @Test(expected = InvalidFunctionNameException.class)
-    public void testSqrtFunction(){
+    public void testGetUnknownFunction(){
         integerFunctionMap.getFunction("sqrt");
     }
 }
