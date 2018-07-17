@@ -6,6 +6,7 @@ import java.time.Month;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Implement methods using Stream API
@@ -21,7 +22,7 @@ public class AccountAnalytics {
         this.accounts = accounts;
     }
 
-    public Account getRichestPerson() {
+    public Optional<Account> findRichestPerson() {
         throw new UnsupportedOperationException("It's your job to make it work!"); // todo
     }
 
