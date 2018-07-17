@@ -4,16 +4,9 @@ import com.bobocode.model.Account;
 import com.bobocode.model.Sex;
 
 import java.time.Month;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
 
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.partitioningBy;
-import static java.util.stream.Collectors.toList;
-import java.util.Optional;
+import static java.util.stream.Collectors.*;
 
 /**
  * Implement methods using Stream API
@@ -29,7 +22,7 @@ public class AccountAnalytics {
         this.accounts = accounts;
     }
 
-    public Optional<Account> getRichestPerson() {
+    public Optional<Account> findRichestPerson() {
         return accounts.stream()
                 .max(Comparator.comparing(Account::getBalance));
     }
