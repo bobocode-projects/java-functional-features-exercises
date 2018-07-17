@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.partitioningBy;
 import static java.util.stream.Collectors.toList;
+import java.util.Optional;
 
 /**
  * Implement methods using Stream API
@@ -28,9 +29,9 @@ public class AccountAnalytics {
         this.accounts = accounts;
     }
 
-    public Account getRichestPerson() {
+    public Optional<Account> getRichestPerson() {
         return accounts.stream()
-                .max(Comparator.comparing(Account::getBalance)).get();
+                .max(Comparator.comparing(Account::getBalance));
     }
 
     public List<Account> findAccountsByBirthdayMonth(Month birthdayMonth) {

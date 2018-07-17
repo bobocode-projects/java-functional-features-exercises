@@ -1,6 +1,5 @@
 package com.bobocode;
 
-import com.bobocode.data.Accounts;
 import com.bobocode.model.Account;
 import com.bobocode.model.Sex;
 import org.junit.Before;
@@ -8,11 +7,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 
@@ -28,96 +27,69 @@ public class AccountAnalyticsTest {
 
     @Before
     public void setUp() {
-        accounts = Accounts.getAccountList(10);
+        accounts = Arrays.asList(
+                new Account(1L, "Justin", "Butler", "justin.butler@gmail.com",
+                        LocalDate.parse("2003-04-17"), Sex.MALE, LocalDateTime.now(), BigDecimal.valueOf(172966)),
+                new Account(1L, "Olivia", "Cardenas", "cardenas@mail.com",
+                        LocalDate.parse("1930-01-19"), Sex.FEMALE, LocalDateTime.now(), BigDecimal.valueOf(38029)),
+                new Account(1L, "Nolan", "Donovan", "nolandonovan@gmail.com",
+                        LocalDate.parse("1925-04-19"), Sex.MALE, LocalDateTime.now(), BigDecimal.valueOf(13889)),
+                new Account(1L, "Lucas", "Lynn", "lucas.lynn@yahoo.com",
+                        LocalDate.parse("1987-05-25"), Sex.MALE, LocalDateTime.now(), BigDecimal.valueOf(16980))
+        );
         analytics = AccountAnalytics.of(accounts);
     }
 
     @Test
-    public void testGetRichestPerson() {
-        Account richestPerson = analytics.getRichestPerson();
+    public void testFindRichestPerson() {
+        Optional<Account> expectedPerson = Optional.of(accounts.get(0));
+        Optional<Account> actualRichestPerson = analytics.findRichestPerson();
 
-        assertEquals(getRichestPerson(), richestPerson);
-    }
-
-    private Account getRichestPerson() {
-        Account richestPerson = accounts.get(0);
-        for (Account account : accounts) {
-            if (account.getBalance().compareTo(richestPerson.getBalance()) > 0) {
-                richestPerson = account;
-            }
-        }
-
-        return richestPerson;
+        assertEquals(expectedPerson, actualRichestPerson);
     }
 
     @Test
     public void testSeparateMaleAccounts() {
+        Map<Boolean, List<Account>> expectedAccountMap = getExpectedMaleMap();
         Map<Boolean, List<Account>> maleToAccountsMap = analytics.partitionMaleAccounts();
 
-        assertEquals(partitionMaleAccounts(), maleToAccountsMap);
+        assertEquals(expectedAccountMap, maleToAccountsMap);
     }
 
-    private Map<Boolean, List<Account>> partitionMaleAccounts() {
-        Map<Boolean, List<Account>> maleToAccountsMap = initializePartitionMap();
-
-        for (Account account : accounts) {
-            if (account.getSex().equals(Sex.MALE)) {
-                maleToAccountsMap.get(true).add(account);
-            } else {
-                maleToAccountsMap.get(false).add(account);
-            }
-        }
-
-        return maleToAccountsMap;
-    }
-
-    private Map<Boolean, List<Account>> initializePartitionMap() {
-        Map<Boolean, List<Account>> partitionMap = new HashMap<>();
-        partitionMap.put(true, new ArrayList<>());
-        partitionMap.put(false, new ArrayList<>());
-        return partitionMap;
+    private Map<Boolean, List<Account>> getExpectedMaleMap() {
+        Map<Boolean, List<Account>> expectedMap = new HashMap<>(2);
+        expectedMap.put(Boolean.TRUE, Arrays.asList(accounts.get(0), accounts.get(2), accounts.get(3)));
+        expectedMap.put(Boolean.FALSE, Arrays.asList(accounts.get(1)));
+        return expectedMap;
     }
 
     @Test
     public void testFindAccountsByBirthdayMonth() {
+        List<Account> expectedList =  getExpectedList();
         List<Account> aprilAccounts = analytics.findAccountsByBirthdayMonth(Month.APRIL);
 
-        assertEquals(findAccountsByBirthdayMonth(Month.APRIL), aprilAccounts);
+        assertEquals(expectedList, aprilAccounts);
     }
 
-    private List<Account> findAccountsByBirthdayMonth(Month month) {
-        List<Account> accountList = new ArrayList<>();
-        for (Account account : accounts) {
-            if (account.getBirthday().getMonth().equals(month)) {
-                accountList.add(account);
-            }
-        }
-
-        return accountList;
+    private List<Account> getExpectedList() {
+        return Arrays.asList(accounts.get(0), accounts.get(2));
     }
 
     @Test
     public void testGroupAccountsByEmailDomain() {
+        Map<String, List<Account>> expectedEmailMap = getExpectedEmailMap();
         Map<String, List<Account>> emailDomainToAccountsMap = analytics.groupAccountsByEmailDomain();
 
-        assertEquals(groupAccountsByEmailDomain(), emailDomainToAccountsMap);
+        assertEquals(expectedEmailMap, emailDomainToAccountsMap);
     }
 
-    private Map<String, List<Account>> groupAccountsByEmailDomain() {
-        Map<String, List<Account>> emailToAccountsMao = new HashMap<>();
+    private Map<String, List<Account>> getExpectedEmailMap() {
+        Map<String, List<Account>> expectedEmailMap = new HashMap<>();
+        expectedEmailMap.put("gmail.com", Arrays.asList(accounts.get(0), accounts.get(2)));
+        expectedEmailMap.put("mail.com", Arrays.asList(accounts.get(1)));
+        expectedEmailMap.put("yahoo.com", Arrays.asList(accounts.get(3)));
 
-        for (Account account : accounts) {
-            String emailDomain = account.getEmail().split("@")[1];
-            if (emailToAccountsMao.containsKey(emailDomain)) {
-                emailToAccountsMao.get(emailDomain).add(account);
-            } else {
-                List<Account> accountList = new ArrayList<>();
-                accountList.add(account);
-                emailToAccountsMao.put(emailDomain, accountList);
-            }
-        }
-
-        return emailToAccountsMao;
+        return expectedEmailMap;
     }
 }
 
