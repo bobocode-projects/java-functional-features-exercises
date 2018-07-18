@@ -12,6 +12,7 @@
         <module>math-functions</module>
         <module>account-analytics</module>
         <module>account-data</module>
+        <module>sum-of-squares</module>
     </modules>
 
     <properties>
