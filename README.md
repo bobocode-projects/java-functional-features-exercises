@@ -10,5 +10,9 @@ It is important to have a different type of activities, which purpose is improvi
 
 ***An exercise** is a predefined task that you continuously implement to improve a certain skill* :muscle:
 ##
-* [Math fucntions](https://github.com/bobocode-projects/java-8-exercises/tree/master/math-functions)
+* [Math functions](https://github.com/bobocode-projects/java-8-exercises/tree/master/math-functions)
+* [Account analytics](https://github.com/bobocode-projects/java-functional-features-exercises/tree/master/account-analytics)
+* [Sum of squares](https://github.com/bobocode-projects/java-functional-features-exercises/tree/master/sum-of-squares)
+* [Crazy lambdas](https://github.com/bobocode-projects/java-functional-features-exercises/tree/master/crazy-lambdas)
+
 
