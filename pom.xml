@@ -13,6 +13,7 @@
         <module>account-analytics</module>
         <module>account-data</module>
         <module>sum-of-squares</module>
+        <module>crazy-lambdas</module>
     </modules>
 
     <properties>
