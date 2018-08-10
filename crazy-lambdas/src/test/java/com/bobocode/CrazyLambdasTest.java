@@ -5,6 +5,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.*;
 
 import static org.junit.Assert.*;
@@ -125,5 +129,70 @@ public class CrazyLambdasTest {
         int result = multiplyByFiveOperation.applyAsInt(11); // 11 * 5 = 55
 
         assertEquals(55, result);
+    }
+
+    @Test
+    public void testRunningThreadSupplier() throws InterruptedException {
+        Queue<Integer> concurrentLinkedQueue = new ConcurrentLinkedQueue<>();
+        Supplier<Thread> runningThreadSupplier = CrazyLambdas.runningThreadSupplier(() -> concurrentLinkedQueue.add(25));
+
+        // supplier does not create and start a thread before you call get()
+        assertEquals(0, concurrentLinkedQueue.size());
+
+        Thread runningThread = runningThreadSupplier.get(); // new thread has been started
+        runningThread.join();
+
+        assertEquals(1, concurrentLinkedQueue.size());
+        assertEquals(25, concurrentLinkedQueue.element().intValue());
+    }
+
+    @Test
+    public void testNewThreadRunnableConsumer() throws InterruptedException {
+        Consumer<Runnable> newThreadRunnableConsumer = CrazyLambdas.newThreadRunnableConsumer();
+
+        Queue<Integer> concurrentLinkedQueue = new ConcurrentLinkedQueue<>();
+        newThreadRunnableConsumer.accept(() -> concurrentLinkedQueue.add(50));
+
+        Thread.sleep(500); // don't do that in real code
+
+        assertEquals(1, concurrentLinkedQueue.size());
+        assertEquals(50, concurrentLinkedQueue.element().intValue());
+    }
+
+    @Test
+    public void testRunnableToThreadSupplierFunction() throws InterruptedException {
+        Function<Runnable, Supplier<Thread>> runnableSupplierFunction = CrazyLambdas.runnableToThreadSupplierFunction();
+        Queue<Integer> concurrentLinkedQueue = new ConcurrentLinkedQueue<>();
+
+        Supplier<Thread> threadSupplier = runnableSupplierFunction.apply(() -> concurrentLinkedQueue.add(200));
+
+        assertEquals(0, concurrentLinkedQueue.size()); // supplier does not create and start a thread before you call get()
+
+        Thread thread = threadSupplier.get();// new thread has been started
+        thread.join();
+
+        assertEquals(1, concurrentLinkedQueue.size());
+        assertEquals(200, concurrentLinkedQueue.element().intValue());
+    }
+
+    @Test
+    public void testFunctionToConditionalFunction() {
+        BiFunction<IntUnaryOperator, IntPredicate, IntUnaryOperator> intFunctionToConditionalIntFunction
+                = CrazyLambdas.functionToConditionalFunction();
+
+        IntUnaryOperator abs = intFunctionToConditionalIntFunction.apply(a -> -a, a -> a < 0);
+
+        assertEquals(5, abs.applyAsInt(-5));
+        assertEquals(0, abs.applyAsInt(0));
+        assertEquals(5, abs.applyAsInt(5));
+    }
+
+    @Test
+    public void testTrickyWellDoneSupplier() {
+        Supplier<Supplier<Supplier<String>>> wellDoneSupplier = CrazyLambdas.trickyWellDoneSupplier();
+
+        String wellDoneStr = wellDoneSupplier.get().get().get();
+
+        assertEquals("WELL DONE!", wellDoneStr);
     }
 }

@@ -103,7 +103,52 @@ public class CrazyLambdas {
         return () -> a -> n * a;
     }
 
+    /**
+     * Receives a {@link Runnable} parameter, and returns a {@link Supplier<Thread>}. The thread will be started only
+     * when you call supplier method {@link Supplier#get()}
+     *
+     * @param runnable the code you want to tun in new thread
+     * @return a thread supplier
+     */
+    public static Supplier<Thread> runningThreadSupplier(Runnable runnable) {
+        throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+    }
 
+    /**
+     * Returns a {@link Consumer} that accepts {@link Runnable} as a parameter and runs in in a new thread.
+     *
+     * @return a runnable consumer
+     */
+    public static Consumer<Runnable> newThreadRunnableConsumer() {
+        throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+    }
+
+
+    public static Function<Runnable, Supplier<Thread>> runnableToThreadSupplierFunction() {
+        throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+    }
+
+    /**
+     * Returns a {@link BiFunction} that has two parameters. First is {@link IntUnaryOperator} which is some integer function.
+     * Second is {@link IntPredicate} which is some integer condition. And the third is {@link IntUnaryOperator} which is
+     * a new composed function that uses provided predicate (second parameter of binary function) to verify its input
+     * parameter. If predicate returns {@code true} it applies a provided integer function
+     * (first parameter of binary function) and returns a result value, otherwise it returns an element itself.
+     *
+     * @return a binary function that receiver predicate and function and compose them to create a new function
+     */
+    public static BiFunction<IntUnaryOperator, IntPredicate, IntUnaryOperator> functionToConditionalFunction() {
+        throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+    }
+
+    /**
+     * Returns {@link Supplier} of {@link Supplier} of {@link Supplier} of {@link String} "WELL DONE".
+     *
+     * @return a supplier instance
+     */
+    public static Supplier<Supplier<Supplier<String>>> trickyWellDoneSupplier() {
+        throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+    }
 }
 
 
