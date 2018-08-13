@@ -71,9 +71,9 @@ public class AccountAnalytics {
     }
 
     /**
-     * Returns a number of letters in all fist names.
+     * Returns a number of letters in all first and last names.
      *
-     * @return total number of letters of first names of all accounts
+     * @return total number of letters of first and last names of all accounts
      */
     public int getNumOfLettersInFirstAndLastNames() {
         return accounts.stream()
