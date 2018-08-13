@@ -19,6 +19,7 @@ public class Account {
     private String email;
     private LocalDate birthday;
     private Sex sex;
-    private LocalDateTime creationDate;
+    private LocalDate creationDate;
     private BigDecimal balance = BigDecimal.ZERO;
 }
+

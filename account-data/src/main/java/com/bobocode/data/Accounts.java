@@ -7,10 +7,8 @@ import io.codearte.jfairy.producer.person.Person;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.IntStream.range;
@@ -32,7 +30,7 @@ public interface Accounts {
                 person.getDateOfBirth().getDayOfMonth()));
         fakeAccount.setSex(Sex.valueOf(person.getSex().name()));
         fakeAccount.setBalance(BigDecimal.valueOf(random.nextInt(200_000)));
-        fakeAccount.setCreationDate(LocalDateTime.now());
+        fakeAccount.setCreationDate(LocalDate.now());
 
         return fakeAccount;
     }
@@ -43,3 +41,4 @@ public interface Accounts {
                 .collect(toList());
     }
 }
+
