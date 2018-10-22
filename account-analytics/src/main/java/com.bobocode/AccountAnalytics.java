@@ -97,8 +97,8 @@ public class AccountAnalytics {
     }
 
     /**
-     * Returns a {@link Map} where key is a birthday month, and value is a {@link String} that stores comma-separated
-     * first names, of all accounts that have the same birthday month.
+     * Returns a {@link Map} where key is a birthday month, and value is a {@link String} that stores comma and space
+     * -separated first names (e.g. "Polly, Dylan, Clark"), of all accounts that have the same birthday month.
      *
      * @return a map where a key is a birthday month and value is comma-separated first names
      */
@@ -128,7 +128,7 @@ public class AccountAnalytics {
 
     /**
      * Returns a {@link Map} where key is a letter {@link Character}, and value is a number of its occurrences ignoring
-     * case, in all {@link Account#firstName} and {@link Account#lastName}.
+     * case, in all {@link Account#firstName} and {@link Account#lastName}. All letters should stored in lower case.
      *
      * @return a map where key is a letter and value is its count ignoring case in all first and last names
      */
