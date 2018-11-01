@@ -127,7 +127,12 @@ public class CrazyLambdas {
         return runnable -> new Thread(runnable).start();
     }
 
-
+    /**
+     * Returns a {@link Function} that accepts an instance of {@link Runnable} and returns a {@link Supplier} of a
+     * started {@link Thread} that is created from a given {@link Runnable}
+     *
+     * @return a function that transforms runnable into a thread supplier
+     */
     public static Function<Runnable, Supplier<Thread>> runnableToThreadSupplierFunction() {
         return runnable -> () -> {
             Thread thread = new Thread(runnable);
