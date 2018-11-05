@@ -123,7 +123,7 @@ public class AccountAnalytics {
      * @return a map where key is a first name and value is a set of first names
      */
     public Map<String, Set<String>> groupFirstNamesByLastNames() {
-        return accounts.stream().collect(Collectors.toMap(a -> a.getLastName(), a -> a.));
+        return accounts.stream().collect(Collectors.mapping(Account::getLastName, Collectors.mapping(Account::getFirstName, Collectors.toSet())));
     }
 
     /**
