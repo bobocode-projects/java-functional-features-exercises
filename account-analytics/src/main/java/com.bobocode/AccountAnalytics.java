@@ -73,10 +73,9 @@ public class AccountAnalytics {
      * @return a map where key is an email domain and value is a list of all account with such email
      */
     public Map<String, List<Account>> groupAccountsByEmailDomain() {
-     Map<String, List<Account>> mailMap = accounts.stream()
-                        .collect(Collectors.groupingBy(a -> a.getEmail()
-                        .split("@")[1]));
-     return mailMap;
+     return accounts.stream()
+                  .collect(Collectors.groupingBy(a -> a.getEmail()
+                  .split("@")[1]));
     }
 
     /**
@@ -123,7 +122,8 @@ public class AccountAnalytics {
      * @return a map where key is a first name and value is a set of first names
      */
     public Map<String, Set<String>> groupFirstNamesByLastNames() {
-        return accounts.stream().collect(Collectors.mapping(Account::getLastName, Collectors.mapping(Account::getFirstName, Collectors.toSet())));
+        return accounts.stream()
+                .collect(Collectors.groupingBy(Account::getLastName, Collectors.mapping(Account::getFirstName, Collectors.toSet())));
     }
 
     /**
@@ -144,7 +144,8 @@ public class AccountAnalytics {
      * @return a map where key is a creation month and value is total balance of all accounts created in that month
      */
     public Map<Month, BigDecimal> groupTotalBalanceByCreationMonth() {
-        throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+        return accounts.stream()
+                .collect(Collectors.groupingBy(a -> a.getCreationDate().getMonth(), Collectors.mapping(account -> account.getBalance(), Collectors.reducing(BigDecimal.ZERO, BigDecimal::add))));
     }
 
     /**
@@ -154,7 +155,11 @@ public class AccountAnalytics {
      * @return a map where key is a letter and value is its count in all first names
      */
     public Map<Character, Long> getCharacterFrequencyInFirstNames() {
-        throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+        return accounts.stream()
+                .map(account -> account.getFirstName())
+                .flatMapToInt(String::chars)
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
     }
 
     /**
@@ -164,7 +169,13 @@ public class AccountAnalytics {
      * @return a map where key is a letter and value is its count ignoring case in all first and last names
      */
     public Map<Character, Long> getCharacterFrequencyIgnoreCaseInFirstAndLastNames() {
-        throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+        return accounts.stream()
+                .flatMap(account -> Stream.of(account.getFirstName(), account.getLastName()))
+                .map(s -> s.toLowerCase())
+                .flatMapToInt(String::chars)
+                .mapToObj(c -> (char) c)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+
     }
 
 

@@ -6,24 +6,13 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-// @NoArgsConstructor
-// @AllArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor
+@AllArgsConstructor(access = AccessLevel.PUBLIC)
 @Getter
 @Setter
 @ToString
 @EqualsAndHashCode(of = "email")
 public class Account {
-
-    public Account(Long id, String firstName, String lastName, String email, LocalDate birthday, Sex sex, LocalDate creationDate, BigDecimal balance) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.birthday = birthday;
-        this.sex = sex;
-        this.creationDate = creationDate;
-        this.balance = balance;
-    }
 
     public Long getId() {
         return id;
