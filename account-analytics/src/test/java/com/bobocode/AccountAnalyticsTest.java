@@ -14,6 +14,8 @@ import java.time.Month;
 import java.util.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 /**
  * The helper method of this test class do not use Stream API intentionally. You should try to find a stream-based
@@ -116,6 +118,13 @@ public class AccountAnalyticsTest {
         assertEquals(3L, sortedList.get(2).getId().longValue());
         assertEquals(2L, sortedList.get(3).getId().longValue());
 
+    }
+
+    @Test
+    public void testContainsAccountWithEmailDomain() {
+        assertTrue(analytics.containsAccountWithEmailDomain("gmail.com"));
+        assertTrue(analytics.containsAccountWithEmailDomain("yahoo.com"));
+        assertFalse(analytics.containsAccountWithEmailDomain("ukr.net"));
     }
 
     @Test

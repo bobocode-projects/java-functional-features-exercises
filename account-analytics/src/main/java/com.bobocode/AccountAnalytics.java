@@ -87,6 +87,16 @@ public class AccountAnalytics {
     }
 
     /**
+     * Checks if there is at least one account with provided email domain.
+     *
+     * @param emailDomain
+     * @return true if there is an account that has an email with provided domain
+     */
+    public boolean containsAccountWithEmailDomain(String emailDomain) {
+        throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+    }
+
+    /**
      * Returns a {@link Map} where key is {@link Account#lastName} and values is a {@link Set} that contains first names
      * of all accounts with a specific last name.
      *
@@ -135,7 +145,6 @@ public class AccountAnalytics {
     public Map<Character, Long> getCharacterFrequencyIgnoreCaseInFirstAndLastNames() {
         throw new UnsupportedOperationException("It's your job to implement this method"); // todo
     }
-
 
 }
 
