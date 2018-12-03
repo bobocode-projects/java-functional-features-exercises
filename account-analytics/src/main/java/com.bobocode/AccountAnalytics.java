@@ -100,7 +100,7 @@ public class AccountAnalytics {
      * Returns a {@link Map} where key is {@link Account#lastName} and values is a {@link Set} that contains first names
      * of all accounts with a specific last name.
      *
-     * @return a map where key is a first name and value is a set of first names
+     * @return a map where key is a last name and value is a set of first names
      */
     public Map<String, Set<String>> groupFirstNamesByLastNames() {
         throw new UnsupportedOperationException("It's your job to implement this method"); // todo
