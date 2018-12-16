@@ -11,6 +11,7 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import static java.util.Comparator.comparing;
+import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.*;
 
 /**
@@ -125,7 +126,11 @@ public class AccountAnalytics {
      * @return account balance
      */
     public BigDecimal getBalanceByEmail(String email) {
-        throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+        return accounts.stream()
+                .filter(account -> account.getEmail().equals(email))
+                .findFirst()
+                .map(Account::getBalance)
+                .orElseThrow(() -> new EntityNotFoundException(String.format("Cannot find Account by email=%s", email)));
     }
 
     /**
@@ -134,7 +139,8 @@ public class AccountAnalytics {
      * @return map of accounts by its ids
      */
     public Map<Long, Account> collectAccountsById() {
-        throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+        return accounts.stream()
+                .collect(toMap(Account::getId, identity()));
     }
 
     /**
@@ -184,7 +190,7 @@ public class AccountAnalytics {
                 .map(Account::getFirstName)
                 .flatMapToInt(String::chars)
                 .mapToObj(c -> (char) c)
-                .collect(groupingBy(Function.identity(), counting()));
+                .collect(groupingBy(identity(), counting()));
     }
 
     /**
@@ -199,7 +205,7 @@ public class AccountAnalytics {
                 .map(String::toLowerCase)
                 .flatMapToInt(String::chars)
                 .mapToObj(c -> (char) c)
-                .collect(groupingBy(Function.identity(), counting()));
+                .collect(groupingBy(identity(), counting()));
     }
 
 }
