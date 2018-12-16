@@ -154,7 +154,9 @@ public class AccountAnalytics {
      * @return map of account by its ids the were created in a particular year
      */
     public Map<String, BigDecimal> collectBalancesByIdForAccountsCreatedOn(int year) {
-        throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+        return accounts.stream()
+                .filter(account -> account.getCreationDate().getYear() == year)
+                .collect(toMap(Account::getEmail, Account::getBalance));
     }
 
     /**
