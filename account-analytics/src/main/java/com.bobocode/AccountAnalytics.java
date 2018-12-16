@@ -1,5 +1,6 @@
 package com.bobocode;
 
+import com.bobocode.exception.EntityNotFoundException;
 import com.bobocode.model.Account;
 import com.bobocode.model.Sex;
 
@@ -114,6 +115,26 @@ public class AccountAnalytics {
         return accounts.stream()
                 .map(Account::getEmail)
                 .anyMatch(email -> email.split("@")[1].equals(emailDomain));
+    }
+
+    /**
+     * Returns account balance by its email. Throws {@link EntityNotFoundException} with message
+     * "Cannot find Account by email={email}" if account is not found.
+     *
+     * @param email account email
+     * @return account balance
+     */
+    public BigDecimal getBalanceByEmail(String email) {
+        throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+    }
+
+    /**
+     * Collects all existing accounts into a {@link Map} where a key is account id, and the value is {@link Account} instance
+     *
+     * @return map of accounts by its ids
+     */
+    public Map<Long, Account> collectAccountsById() {
+        throw new UnsupportedOperationException("It's your job to implement this method"); // todo
     }
 
     /**

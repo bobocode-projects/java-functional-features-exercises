@@ -1,5 +1,6 @@
 package com.bobocode;
 
+import com.bobocode.exception.EntityNotFoundException;
 import com.bobocode.model.Account;
 import com.bobocode.model.Sex;
 import org.junit.Before;
@@ -9,13 +10,10 @@ import org.junit.runners.JUnit4;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 /**
  * The helper method of this test class do not use Stream API intentionally. You should try to find a stream-based
@@ -125,6 +123,36 @@ public class AccountAnalyticsTest {
         assertTrue(analytics.containsAccountWithEmailDomain("gmail.com"));
         assertTrue(analytics.containsAccountWithEmailDomain("yahoo.com"));
         assertFalse(analytics.containsAccountWithEmailDomain("ukr.net"));
+    }
+
+    @Test
+    public void testGetBalanceByEmail() {
+        Account account = accounts.get(1);
+        BigDecimal balance = analytics.getBalanceByEmail(account.getEmail());
+
+        assertEquals(account.getBalance(), balance);
+    }
+
+    @Test
+    public void testGetBalanceByEmailThrowsException() {
+        String fakeEmail = "fake@mail.com";
+        try {
+            analytics.getBalanceByEmail(fakeEmail);
+            fail("Should throw exception");
+        } catch (Exception e) {
+            assertTrue(e instanceof EntityNotFoundException);
+            assertEquals(String.format("Cannot find Account by email=%s", fakeEmail), e.getMessage());
+        }
+    }
+
+    @Test
+    public void testCollectAccountsById() {
+        Map<Long, Account> idToAccountMap = analytics.collectAccountsById();
+
+        assertEquals(accounts.get(0), idToAccountMap.get(1L));
+        assertEquals(accounts.get(1), idToAccountMap.get(2L));
+        assertEquals(accounts.get(2), idToAccountMap.get(3L));
+        assertEquals(accounts.get(3), idToAccountMap.get(4L));
     }
 
     @Test
