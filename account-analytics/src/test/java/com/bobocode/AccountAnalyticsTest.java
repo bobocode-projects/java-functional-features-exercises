@@ -156,6 +156,15 @@ public class AccountAnalyticsTest {
     }
 
     @Test
+    public void testCollectBalancesByIdForAccountsCreatedOn() {
+        Account account = accounts.get(3);
+
+        Map<String, BigDecimal> emailToBalanceMap = analytics.collectBalancesByIdForAccountsCreatedOn(account.getCreationDate().getYear());
+
+        assertEquals(Map.of(account.getEmail(), account.getBalance()), emailToBalanceMap);
+    }
+
+    @Test
     public void testGroupFirstNamesByLastNames() {
         Map<String, Set<String>> lastToFirstNamesMap = analytics.groupFirstNamesByLastNames();
 

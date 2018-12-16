@@ -14,6 +14,9 @@ import static java.util.Comparator.comparing;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.*;
 
+import static java.util.stream.Collectors.mapping;
+import static java.util.stream.Collectors.toMap;
+
 /**
  * Implement methods using Stream API
  */
@@ -141,6 +144,17 @@ public class AccountAnalytics {
     public Map<Long, Account> collectAccountsById() {
         return accounts.stream()
                 .collect(toMap(Account::getId, identity()));
+    }
+
+    /**
+     * Filters accounts by the year when an account was created. Collects account balances by its emails into a {@link Map}.
+     * The key is {@link Account#email} and the value is {@link Account#balance}
+     *
+     * @param year the year of account creation
+     * @return map of account by its ids the were created in a particular year
+     */
+    public Map<String, BigDecimal> collectBalancesByIdForAccountsCreatedOn(int year) {
+        throw new UnsupportedOperationException("It's your job to implement this method"); // todo
     }
 
     /**
