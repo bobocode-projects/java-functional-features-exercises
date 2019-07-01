@@ -6,7 +6,9 @@ import org.junit.runners.JUnit4;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.function.*;
@@ -33,6 +35,17 @@ public class CrazyLambdasTest {
 
         assertFalse(nonEmptyStringResult);
         assertTrue(emptyStringResult);
+    }
+
+    @Test
+    public void testStringMultiplier() {
+        BiFunction<String, Integer, String> stringMultiplier = CrazyLambdas.stringMultiplier();
+
+        String threeTimesHi = stringMultiplier.apply("Hi", 3);
+        String twoTimesHello = stringMultiplier.apply("Hello", 2);
+
+        assertEquals("HiHiHi", threeTimesHi);
+        assertEquals("HelloHello", twoTimesHello);
     }
 
     @Test
@@ -132,6 +145,19 @@ public class CrazyLambdasTest {
     }
 
     @Test
+    public void testComposeWithTrimFunction() {
+        UnaryOperator<Function<String, String>> composeWithTrimFunction = CrazyLambdas.composeWithTrimFunction();
+        Function<String, String> toLowerWithTrim = composeWithTrimFunction.apply(String::toLowerCase);
+        Function<String, String> threeTimesRepeatWithTrim = composeWithTrimFunction.apply(s -> s.repeat(3));
+
+        String hey = toLowerWithTrim.apply("  Hey ");
+        String threeTimesHi = threeTimesRepeatWithTrim.apply("  Hi  ");
+
+        assertEquals("hey", hey);
+        assertEquals("HiHiHi", threeTimesHi);
+    }
+
+    @Test
     public void testRunningThreadSupplier() throws InterruptedException {
         Queue<Integer> concurrentLinkedQueue = new ConcurrentLinkedQueue<>();
         Supplier<Thread> runningThreadSupplier = CrazyLambdas.runningThreadSupplier(() -> concurrentLinkedQueue.add(25));
@@ -186,6 +212,23 @@ public class CrazyLambdasTest {
         assertEquals(0, abs.applyAsInt(0));
         assertEquals(5, abs.applyAsInt(5));
     }
+
+    @Test
+    public void testFunctionLoader() {
+        BiFunction<Map<String, IntUnaryOperator>, String, IntUnaryOperator> functionLoader = CrazyLambdas.functionLoader();
+        Map<String, IntUnaryOperator> functionMap = new HashMap<>();
+        functionMap.put("increment", x -> x + 1);
+        functionMap.put("square", x -> x * x);
+
+        IntUnaryOperator incrementFunction = functionLoader.apply(functionMap, "increment");
+        IntUnaryOperator squareFunction = functionLoader.apply(functionMap, "square");
+        IntUnaryOperator identityFunction = functionLoader.apply(functionMap, "none");
+
+        assertEquals(5, incrementFunction.applyAsInt(4));
+        assertEquals(9, squareFunction.applyAsInt(3));
+        assertEquals(10, identityFunction.applyAsInt(10));
+    }
+
 
     @Test
     public void testTrickyWellDoneSupplier() {
