@@ -186,7 +186,7 @@ public class CrazyLambdas {
      * @return a high-order function that fetches a function from a function map by a given name or returns identity()
      */
     public static BiFunction<Map<String, IntUnaryOperator>, String, IntUnaryOperator> functionLoader() {
-        throw new UnsupportedOperationException("It's your job to implement this method"); // todo
+        return (map, fName) -> map.getOrDefault(fName, IntUnaryOperator.identity()); // todo
     }
 
     /**
