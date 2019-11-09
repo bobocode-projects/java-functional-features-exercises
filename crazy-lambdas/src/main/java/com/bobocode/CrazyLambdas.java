@@ -145,10 +145,9 @@ public class CrazyLambdas {
      * @return a runnable consumer
      */
     public static Consumer<Runnable> newThreadRunnableConsumer() {
-        return runnable -> {
-            var thread = new Thread(runnable);
-            thread.start();
-        }; // todo
+        return runnable -> new Thread(runnable).start();
+
+        // todo
     }
 
     /**
@@ -159,7 +158,7 @@ public class CrazyLambdas {
      */
     public static Function<Runnable, Supplier<Thread>> runnableToThreadSupplierFunction() {
         return runnable -> () -> {
-            Thread thread = new Thread(runnable);
+            var thread = new Thread(runnable);
             thread.start();
             return thread;
         }; // todo
