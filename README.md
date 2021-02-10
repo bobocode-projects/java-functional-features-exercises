@@ -1,4 +1,4 @@
-# This repo is DEPRECATED. Please use https://github.com/bobocode-projects/java-fundamentals-course
+# This repo is DEPRECATED. Please use [java-Fundamentals-course](https://github.com/bobocode-projects/java-fundamentals-course) instead
 # <img src="https://raw.githubusercontent.com/bobocode-projects/resources/master/image/logo_transparent_background.png" height=50/>Java 8 exercises
 The list of exercises dedicated to training your Java 8 and functional programming skills
 
@@ -15,5 +15,3 @@ It is important to have a different type of activities, which purpose is improvi
 * [Account analytics](https://github.com/bobocode-projects/java-functional-features-exercises/tree/master/account-analytics)
 * [Sum of squares](https://github.com/bobocode-projects/java-functional-features-exercises/tree/master/sum-of-squares)
 * [Crazy lambdas](https://github.com/bobocode-projects/java-functional-features-exercises/tree/master/crazy-lambdas)
-
-
